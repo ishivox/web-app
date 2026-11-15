@@ -81,6 +81,12 @@ TEST_BASE_URL=http://localhost:3000 TEST_SITE_ORIGIN=https://your-new-domain.exa
 
 `NEXT_PUBLIC_*` values are public and embedded at build time; rebuild after changing them. Run `npm run build` in an environment that permits Next.js worker processes and local socket binding. Do not run development and production builds against the same `.next` folder concurrently.
 
+## Continuous integration
+
+GitHub Actions runs one **CI / Checks** job on pushes and pull requests using Node.js 24 and a cached npm download directory. It installs the lockfile with `npm ci`, checks formatting (including workflow YAML), runs unit tests, builds the production app with TypeScript checking, and runs SEO HTTP tests against a temporary production server. Failed HTTP checks include the server log for diagnosis.
+
+The workflow uses read-only repository permissions, cancels superseded runs for the same ref, and has a 15-minute timeout. No secrets or deployment credentials are required. Vercel hosting remains separate.
+
 ## Motion
 
 The reference-inspired motion uses CSS keyframes for the connector beams, collaboration tiles, rocket, task sequence, and document scan. A small client provider coordinates viewport visibility and one-time scroll reveals with IntersectionObserver and the Web Animations API. The dotted globe uses a canvas capped at 30 fps and pauses outside the viewport or when the tab is hidden. No animation library is required.
